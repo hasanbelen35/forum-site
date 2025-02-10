@@ -1,18 +1,15 @@
 import mysql from 'mysql2';
 import dotenv from 'dotenv';
 
-// .env dosyasını yükle
 dotenv.config();
 
-// MySQL bağlantısını oluştur
 const DBconnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: process.env.DB_PASSWORD,  // .env dosyasındaki şifreyi alıyoruz
+    password: process.env.DB_PASSWORD,  
     database: 'form'
 });
 
-// Bağlantıyı başlat
 DBconnection.connect((err) => {
     if (err) {
         console.error('DB connection ERROR!: ', err);
@@ -21,4 +18,4 @@ DBconnection.connect((err) => {
     console.log('DB connection SUCCESSFUL!');
 });
 
-export default DBconnection;  // ES Module olarak dışa aktarma
+export default DBconnection;  
