@@ -9,6 +9,72 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+model User {
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  password       String
+  firstName      String?
+  lastName       String?
+  username       String         @unique
+  profilePicture String?
+  role           String         @default("user")
+  birthday       DateTime?
+  linkedin       String?
+  github         String?
+  website        String?
+  twitter        String?
+  instagram      String?
+  facebook       String?
+  verified       Boolean        @default(false)
+  emailVerified  Boolean        @default(false)
+  posts          Post[]         // User modelindeki Post ilişkisi
+  comments       Comment[]      // User modelindeki Comment ilişkisi
+  postLikes      PostLike[]     // User modelindeki PostLike ilişkisi
+  notifications  Notification[] // User modelindeki Notification ilişkisi
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@map("users")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  comments  Comment[] // Ters ilişki: Post modeline bağlı Comment'lar
+  postLikes PostLike[] // Ters ilişki: Post modeline bağlı PostLike'lar
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model PostLike {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  content   String
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }
