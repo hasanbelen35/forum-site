@@ -1,9 +1,6 @@
 {
-  "execMap": {
-    "ts": "ts-node"
-  },
-  "watch": [
-    "src/**/*.ts"
-  ],
-  "ext": "ts,tsx"
+  "watch": ["."], 
+  "ignore": ["node_modules", "dist"], 
+  "ext": "ts,tsx,env",
+  "exec": "ts-node server.ts"
 }

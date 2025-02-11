@@ -16,9 +16,21 @@ model User {
   id             Int            @id @default(autoincrement())
   email          String         @unique
   password       String
-  firstName      String?
-  lastName       String?
+  firstName      String
+  lastName       String
   username       String         @unique
+  profile        Profile?       @relation(fields: [id], references: [userId]) // Profile ile ilişki
+  posts          Post[]         
+  comments       Comment[]      
+  postLikes      PostLike[]     
+  notifications  Notification[] 
+
+  @@map("users")
+}
+
+model Profile {
+  id             Int            @id @default(autoincrement())
+  userId         Int            @unique 
   profilePicture String?
   role           String         @default("user")
   birthday       DateTime?
@@ -30,15 +42,16 @@ model User {
   facebook       String?
   verified       Boolean        @default(false)
   emailVerified  Boolean        @default(false)
-  posts          Post[]         // User modelindeki Post ilişkisi
-  comments       Comment[]      // User modelindeki Comment ilişkisi
-  postLikes      PostLike[]     // User modelindeki PostLike ilişkisi
-  notifications  Notification[] // User modelindeki Notification ilişkisi
+  posts          Post[]         
+  comments       Comment[]      
+  postLikes      PostLike[]     
+  notifications  Notification[] 
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  @@map("users")
+  user           User           @relation(fields: [userId], references: [id]) 
 }
+
 
 model Post {
   id        Int      @id @default(autoincrement())

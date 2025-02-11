@@ -1,9 +1,9 @@
-// app.ts
+// server.ts// app.ts
 import express from 'express';
 import dotenv from 'dotenv';
-import DBconnection from './database/db'; 
+import DBconnection from './database/db.ts';
 import { PrismaClient } from '@prisma/client';
-
+import router from './routes/route.ts';
 dotenv.config();
 
 DBconnection.connect();
@@ -11,11 +11,18 @@ DBconnection.connect();
 const prisma = new PrismaClient();
 const app = express();
 
+app.use(express.json());
+app.use("/api", router);
 
-app.get('/users', async (req, res) => {
+
+/*app.get('/users', async (req, res) => {
     const data = {
-        name: 'Johassdn',
-        email: 'asdssasd@gmai.com'
+        email: 'asdsssasd@gmai.com',
+        password:"asdas2addasd",
+        firstName: 'John',
+        lastName: 'Doe',
+        username: 'johndoe',
+
     };
 
     try {
@@ -26,5 +33,6 @@ app.get('/users', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while creating the user' });
     }
 });
+*/
 
-export { app };
+export default app;
