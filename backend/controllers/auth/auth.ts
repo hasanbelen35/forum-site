@@ -1,8 +1,23 @@
-import { registerUser } from '../../services/auth/authServices.ts';
-import { Request, Response } from 'express';
-import { RegisterUserInterface } from '../../interfaces/authInterface.ts';
+import { registerUser, loginUser } from '../../services/auth/authServices.ts';
+import { sendJWTtokenToClient } from '../../utils/jwt.ts';
 
-const registerController = async (req: Request<{}, {}, RegisterUserInterface>, res: Response) => {
+interface RegisterUserInterface {
+    email: string;
+    password: string;
+    username: string;
+    firstName: string;
+    lastName: string;
+};
+interface LoginUser {
+    email: string;
+    password: string;
+};
+
+const registerController = async (
+    req: RegisterUserInterface,
+    res: any
+) => {
+
     try {
         const authData = req.body;
         const newUser = await registerUser(authData, res);
@@ -16,6 +31,22 @@ const registerController = async (req: Request<{}, {}, RegisterUserInterface>, r
     }
 };
 
+const loginController = async (req: LoginUser, res: any) => {
+    try {
+        const { email, password } = req.body;
+        const login = await loginUser(email, password);  
+
+        if (login.error) {
+            return res.status(401).json({ error: login.error });
+        }
+
+        return sendJWTtokenToClient(login, res);
+        
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while logging in!' });
+    }
+};
+
 export {
-    registerController
+    registerController, loginController
 };
