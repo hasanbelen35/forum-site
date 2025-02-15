@@ -34,19 +34,25 @@ const registerController = async (
 const loginController = async (req: LoginUser, res: any) => {
     try {
         const { email, password } = req.body;
-        const login = await loginUser(email, password);  
+        const login = await loginUser(email, password);
 
         if (login.error) {
             return res.status(401).json({ error: login.error });
         }
 
         return sendJWTtokenToClient(login, res);
-        
+
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while logging in!' });
     }
 };
 
+
+
+const profileController = async (req: any, res: any) => {
+    res.send('Profile page');
+}
+
 export {
-    registerController, loginController
+    registerController, loginController, profileController
 };

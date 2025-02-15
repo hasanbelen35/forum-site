@@ -21,13 +21,16 @@ export const sendJWTtokenToClient = (user: any, res: any) => {
 
     const { JWT_COOKIE_EXPIRES, NODE_ENV } = process.env;
 
-    return res.status(200).cookie('token', token, {
-        httpOnly: true,  
-        expires: new Date(Date.now() + parseInt(JWT_COOKIE_EXPIRES) * 1000 * 60),  
-        secure: NODE_ENV === 'development' ? false : true  
+    return res.status(200).cookie('access-token', token, {
+        httpOnly: true,
+        expires: new Date(Date.now() + parseInt(JWT_COOKIE_EXPIRES) * 1000 * 60),
+        secure: NODE_ENV === 'development' ? false : true
     }).json({ success: true, token });
 };
 
+export const isTokenIncluded = (req: any) => {
+    return req.cookies && req.cookies["access-token"];
+};
 
 // VERIFY TOKEN
 export const verifyToken = (token: string) => {
