@@ -1,7 +1,5 @@
 import jwt from 'jsonwebtoken'
 
-
-
 const { JWT_SECRET_KEY, JWT_EXPIRES_IN } = process.env;
 
 // GENERATE TOKEN
@@ -25,7 +23,11 @@ export const sendJWTtokenToClient = (user: any, res: any) => {
         httpOnly: true,
         expires: new Date(Date.now() + parseInt(JWT_COOKIE_EXPIRES) * 1000 * 60),
         secure: NODE_ENV === 'development' ? false : true
-    }).json({ success: true, token });
+    }).json({
+        success: true,
+        data: "User logged in successfully"
+    });
+
 };
 
 export const isTokenIncluded = (req: any) => {

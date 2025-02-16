@@ -14,7 +14,7 @@ const Login = () => {
                 email,
                 password
             }, {
-                withCredentials: true  // Çerezlerin paylaşılması için eklenen özellik
+                withCredentials: true  
             });
             console.log(response.data);
             alert("Login Successful");
