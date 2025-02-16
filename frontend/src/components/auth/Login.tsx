@@ -1,33 +1,16 @@
 'use client';
 import React, { useState } from 'react';
-import axios from 'axios';
+import { loginUser } from '../../api/auth/Auth';   
 
 const Login = () => {
     // STATES
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // LOGIN USER
-    const loginUser = async () => {
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/login`, {
-                email,
-                password
-            }, {
-                withCredentials: true  
-            });
-            console.log(response.data);
-            alert("Login Successful");
-        } catch (error) {
-            console.error(error);
-            alert("Login Failed");
-        }
-    };
-
     // HANDLE SUBMIT
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        loginUser();
+        loginUser(email, password);  
     };
 
     return (

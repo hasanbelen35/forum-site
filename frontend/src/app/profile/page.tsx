@@ -1,28 +1,36 @@
 'use client';
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React from 'react'
+import { getProfile } from '@/api/profile/profile'
+import { useEffect, useState } from 'react'
 
-const Page = () => {
-    const fetch = async () => {
-        try {
-            const x = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/profile`, {
-                withCredentials: true
-            });
-            console.log(x.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+interface Profile {
+    id : number;
+    email : string;
+}
+const page = () => {
+    const [profile, setProfile] = useState<Profile | null>(null);
 
     useEffect(() => {
-        fetch(); // Call the fetch function when the component mounts
-    }, []);
+        const fetchData = async () => {
+            const profileData = await getProfile();
+            setProfile(profileData);
+        }
+        fetchData();
+    }, [])
 
     return (
         <div>
-            {/* Add your component's content here */}
+            <h1>profile page</h1>
+            {profile ? (
+                <div>
+                    <p>id: {profile.id}</p>
+                    <p>email: {profile.email}</p>
+                </div>
+            ) : (
+                <p>loading...</p>
+            )}
         </div>
-    );
-};
+    )
+}
 
-export default Page;
+export default page

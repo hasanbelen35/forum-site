@@ -1,7 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import axios from 'axios';
-
+import { registerUser } from '../../api/auth/Auth';
 const Register = () => {
     // STATES
     const [email, setEmail] = useState('');
@@ -10,29 +9,15 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
 
-    // REGISTER-USER
-    const registerUser = async () => {
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/register`, {
-                email,
-                username,
-                firstName,
-                lastName,
-                password
-            });
-            console.log(response.data);
-            alert("basarılı")
-        } catch (error) {
-            console.error(error);
-            alert("basarısız")
-
-        }
-    };
-
     // HANDLE-SUBMIT
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        registerUser();
+        registerUser(email, username, firstName, lastName, password);
+        setEmail('');
+        setUsername('');
+        setFirstName('');
+        setLastName('');
+        setPassword('');
     };
 
     return (

@@ -38,6 +38,7 @@ export const isTokenIncluded = (req: any) => {
 export const verifyToken = (token: string) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET_KEY as string);
+        
         return decoded;
     } catch (error) {
         throw new Error('Invalid token');
