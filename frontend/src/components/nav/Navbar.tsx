@@ -53,7 +53,11 @@ const Navbar: React.FC = () => {
                     </div>
                 </div>
             </div>
-
+           
+            {/* UNDER NAV*/}
+            <div className='shadow-2xl dark:bg-darkerBG dark:text-white pb-2 pt-2 flex justify-center items-center'>
+                SECOND NAV
+            </div>
         </div>
     )
 }

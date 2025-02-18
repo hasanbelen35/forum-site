@@ -1,9 +1,9 @@
 import React from 'react'
-import Register from '../../components/auth/Register'
+import RegisterPage from '@/pages/register/RegisterPage'
 const page = () => {
     return (
-        <div>
-            <Register />
+        <div className='bg-grayBg'>
+            <RegisterPage />
         </div>
     )
 }

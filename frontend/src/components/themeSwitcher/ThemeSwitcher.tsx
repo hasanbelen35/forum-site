@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { CiLight } from "react-icons/ci";
+import { CiDark } from "react-icons/ci";
 
 const ThemeSwitcher: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
@@ -26,12 +28,12 @@ const ThemeSwitcher: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300 focus:outline-none"
+      className="p-2 pr-4 pl-4 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300 focus:outline-none"
     >
       {isDarkMode ? (
-        <span className="text-xl text-yellow-400">🌙</span> 
+        <span className="text-xl text-white "><CiLight /></span>
       ) : (
-        <span className="text-xl text-yellow-400">🌞</span> 
+        <span className="text-xl "><CiDark /></span>
       )}
     </button>
   );
