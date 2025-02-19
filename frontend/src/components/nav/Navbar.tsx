@@ -30,7 +30,9 @@ const Navbar: React.FC = () => {
                         {/* THEME SWITCHER */}
                         <ThemeSwitcher />
                         {/* NAV-BUTTONS */}
-                        <button id="new-post" className='p-2 pr-6 pl-6 border dark:border-green-400 text-textGreen border-b-greenBg flex items-center justify-center gap-2 font-roboto transition duration-300 rounded-lg hover:bg-greenBg hover:text-white'>
+                        <button id="new-post"
+                            onClick={() => router.push("/newPost")}
+                            className='p-2 pr-6 pl-6 border dark:border-green-400 text-textGreen border-b-greenBg flex items-center justify-center gap-2 font-roboto transition duration-300 rounded-lg hover:bg-greenBg hover:text-white'>
                             <LuPenLine />
                             New Post
                         </button>
@@ -53,7 +55,7 @@ const Navbar: React.FC = () => {
                     </div>
                 </div>
             </div>
-           
+
             {/* UNDER NAV*/}
             <div className='shadow-2xl dark:bg-darkerBG dark:text-white pb-2 pt-2 flex justify-center items-center'>
                 SECOND NAV
