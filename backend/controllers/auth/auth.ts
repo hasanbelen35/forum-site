@@ -15,21 +15,20 @@ interface LoginUser {
     email: string;
     password: string;
 };
-
-// Register controller fonksiyonu
 const registerController = async (
-    req: { body: RegisterUserInterface }, // req.body'yi tipliyoruz
-    res: any
+    req: { body: RegisterUserInterface }, 
+    res: any,
+    
 ) => {
     try {
         const authData = req.body;
-        const newUser = await registerUser(authData, res);  // Yeni kullanıcıyı kaydediyoruz
-        res.status(201).json({
+        const newUser = await registerUser(authData);
+        return res.status(201).json({
             success: true,
             data: newUser
         });
-    } catch (error) {
-        res.status(500).json({ error: 'Registration failed' });
+    } catch (err) {
+        return res.status(500).json({ error: err.message || 'Registration failed' });
     }
 };
 
@@ -60,17 +59,10 @@ const logoutController = async (req: any, res: any) => {
     }
 };
 
-const profileController = async (req: any, res: any) => {
-    try {
-        res.status(200).json({ success: true, data: req.user });
-    } catch (error) {
-        res.status(500).json({ error: 'An error occurred while fetching profile!' });
-    }
-};
 
 export {
     registerController,
     loginController,
-    profileController,
+   
     logoutController
 };

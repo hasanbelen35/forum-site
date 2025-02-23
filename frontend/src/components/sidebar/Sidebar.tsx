@@ -9,7 +9,7 @@ interface SidebarINTF {
 
 const Sidebar = () => {
   const sidebarItems: SidebarINTF[] = [
-    { name: "Anasayfa", route: "/" },
+    { name: "Anasayfa", route: "/dashboard" },
     { name: "Gündem Haberleri", route: "/gundem" },
     { name: "İletişim", route: "/iletisim" },
     { name: "Kurallar", route: "/kurallar" },

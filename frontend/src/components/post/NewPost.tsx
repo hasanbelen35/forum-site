@@ -21,7 +21,7 @@ const NewPost = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         handleCreatePost();
-        router.push("/");
+        router.push("/dashboard");
 
     };
 

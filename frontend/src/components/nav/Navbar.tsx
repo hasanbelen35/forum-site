@@ -1,7 +1,6 @@
 'use client';
 import React from 'react'
-import { LiaSignInAltSolid } from "react-icons/lia";
-import { MdOutlineAccessibilityNew } from "react-icons/md";
+
 import { LuPenLine } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -36,22 +35,17 @@ const Navbar: React.FC = () => {
                             <LuPenLine />
                             New Post
                         </button>
-                        <button id='sign-in'
-                            onClick={() => router.push("/login")}
-                            className='p-2 pr-6 pl-6 border border-b-greenBg dark:text-white dark:border-none dark:hover:bg-darkTextGreen flex items-center justify-center gap-2  transition duration-300 rounded-lg text-black font-roboto  hover:text-textGreen hover:border hover:border-b-greenBg '>
-                            <MdOutlineAccessibilityNew />
-                            SignIn
-                        </button>
 
-                        <button id='sign-up'
-                            onClick={() => router.push("/register")}
-                            className='bg-greenBg   flex items-center justify-center gap-2 text-white p-2 pr-6 pl-6 rounded-lg transition duration-300  hover:bg-white font-bold font-roboto hover:text-textGreen hover:border hover:border-green-500'>
-                            <LiaSignInAltSolid />
-                            SignUp
-                        </button>
                         <div className='text-4xl text-gray-600 cursor-pointer dark:text-gray-400'>
                             <FaRegUserCircle />
                         </div>
+                  
+                        <button id='sign-in'
+                            onClick={() => router.push("/login")}
+                            className='p-2 pr-6 pl-6 border  border-b-greenBg dark:text-white dark:border-none dark:hover:bg-darkTextGreen flex items-center justify-center gap-2  transition duration-300 rounded-lg text-black font-roboto  hover:text-textGreen hover:border hover:border-b-greenBg '>
+
+                            Logout
+                        </button>
                     </div>
                 </div>
             </div>

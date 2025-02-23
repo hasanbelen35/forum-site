@@ -1,9 +1,10 @@
+import Home from '@/pages/home/Home'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>
-      dashboard
+    <div className='container mx-auto '>
+      <Home />
     </div>
   )
 }

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,6 +6,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
 model User {
   id             Int            @id @default(autoincrement())
   email          String         @unique
@@ -19,12 +14,12 @@ model User {
   firstName      String
   lastName       String
   username       String         @unique
-  profile        Profile?       @relation(fields: [id], references: [userId]) // Profile ile ilişki
-  posts          Post[]         
-  comments       Comment[]      
-  postLikes      PostLike[]     
-  notifications  Notification[] 
-
+  profile        Profile?
+  posts          Post[]
+  comments       Comment[]
+  postLikes      PostLike[]
+  notifications  Notification[]
+  
   @@map("users")
 }
 
@@ -42,16 +37,11 @@ model Profile {
   facebook       String?
   verified       Boolean        @default(false)
   emailVerified  Boolean        @default(false)
-  posts          Post[]         
-  comments       Comment[]      
-  postLikes      PostLike[]     
-  notifications  Notification[] 
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
 
-  user           User           @relation(fields: [userId], references: [id]) 
+  user           User           @relation(fields: [userId], references: [id])
 }
-
 
 model Post {
   id        Int      @id @default(autoincrement())
@@ -59,8 +49,8 @@ model Post {
   content   String
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
-  comments  Comment[] // Ters ilişki: Post modeline bağlı Comment'lar
-  postLikes PostLike[] // Ters ilişki: Post modeline bağlı PostLike'lar
+  comments  Comment[] 
+  postLikes PostLike[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

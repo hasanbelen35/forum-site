@@ -12,8 +12,7 @@ interface RegisterUserInterface {
 };
 
 const prisma = new PrismaClient();
-
-export const registerUser = async (userData: RegisterUserInterface, res: any) => {
+export const registerUser = async (userData: RegisterUserInterface) => {
     try {
         const { email, password, username, firstName, lastName } = userData;
         const hashedPassword = await hashPassword(password);
@@ -27,7 +26,7 @@ export const registerUser = async (userData: RegisterUserInterface, res: any) =>
         const newUser = await prisma.user.create({ data });
         return newUser;
     } catch (err) {
-        res.status(500).json({ error: 'An error occurred while registering!' });
+        throw new Error('An error occurred while registering!');
     }
 };
 

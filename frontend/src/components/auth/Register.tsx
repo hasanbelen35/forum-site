@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { registerUser } from '../../api/auth/Auth';
+import { useRouter } from 'next/navigation';
 const Register = () => {
     // STATES
     const [email, setEmail] = useState('');
@@ -9,15 +10,17 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [password, setPassword] = useState('');
 
+    const router = useRouter();
     // HANDLE-SUBMIT
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        registerUser(email, username, firstName, lastName, password);
+       await  registerUser(email, username, firstName, lastName, password);
         setEmail('');
         setUsername('');
         setFirstName('');
         setLastName('');
         setPassword('');
+        router.push("/login");
     };
 
     return (
@@ -95,7 +98,7 @@ const Register = () => {
             </form>
             <div className='text-black dark:text-white flex flex-col items-center justify-center mt-5'>
                 <p> Have you already an acount?</p>
-                <span className='text-greenBg'>Sign In</span>
+                <span className='text-greenBg cursor-pointer underline' onClick={()=> router.push("/login") }>Sign In</span>
             </div>
         </div>
     );

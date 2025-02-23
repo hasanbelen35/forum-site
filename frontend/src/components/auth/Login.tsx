@@ -9,9 +9,13 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     // HANDLE SUBMIT
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        loginUser(email, password);
+        const login = await loginUser(email, password);
+
+            router.push('/dashboard');
+        
+
     };
 
     return (
@@ -63,7 +67,7 @@ const Login = () => {
                 <p className='dark:text-white'>Don't you have an account?</p>
                 <p
                     className='text-greenBg cursor-pointer underline'
-                    onClick={() => router.push("/register")}
+                    onClick={() => router.push("/")}
                 >create account</p>
             </div>
         </div>

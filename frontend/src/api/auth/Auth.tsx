@@ -10,6 +10,7 @@ export const loginUser = async (email: string, password: string) => {
         });
         console.log(response.data);
         alert("Login Successful");
+        
     } catch (error) {
         console.error(error);
         alert("Login Failed");
@@ -25,11 +26,13 @@ export const registerUser = async (email: string, username: string, firstName: s
             lastName,
             password
         });
-        console.log(response.data);
-        alert("basarılı")
+        if (response.data) {
+            console.log(response.data);
+        };
+
+
     } catch (error) {
         console.error(error);
-        alert("basarısız")
 
     }
 };
