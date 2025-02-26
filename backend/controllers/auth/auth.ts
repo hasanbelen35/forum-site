@@ -16,9 +16,9 @@ interface LoginUser {
     password: string;
 };
 const registerController = async (
-    req: { body: RegisterUserInterface }, 
+    req: { body: RegisterUserInterface },
     res: any,
-    
+
 ) => {
     try {
         const authData = req.body;
@@ -28,6 +28,7 @@ const registerController = async (
             data: newUser
         });
     } catch (err) {
+        console.log(err)
         return res.status(500).json({ error: err.message || 'Registration failed' });
     }
 };
@@ -42,27 +43,37 @@ const loginController = async (req: { body: LoginUser }, res: any) => {
             return res.status(401).json({ error: login.error });
         }
 
-        return sendJWTtokenToClient(login, res); 
+        return sendJWTtokenToClient(login, res);
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while logging in!' });
     }
 };
 
+
 const logoutController = async (req: any, res: any) => {
     try {
-        res.clearCookie('access-token').status(200).json({
+        res.clearCookie('access-token', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+        });
+
+        return res.status(200).json({
             success: true,
-            message: 'Logout successful'
+            message: 'Logout successful',
         });
     } catch (error) {
-        res.status(500).json({ error: 'An error occurred while logging out!' });
+        console.error("Logout Error:", error);
+        return res.status(500).json({ error: "An error occurred while logging out!" });
     }
 };
+
+
 
 
 export {
     registerController,
     loginController,
-   
+
     logoutController
 };

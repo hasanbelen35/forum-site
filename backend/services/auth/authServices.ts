@@ -26,6 +26,7 @@ export const registerUser = async (userData: RegisterUserInterface) => {
         const newUser = await prisma.user.create({ data });
         return newUser;
     } catch (err) {
+        console.log(err)
         throw new Error('An error occurred while registering!');
     }
 };

@@ -67,7 +67,7 @@ const Login = () => {
                 <p className='dark:text-white'>Don't you have an account?</p>
                 <p
                     className='text-greenBg cursor-pointer underline'
-                    onClick={() => router.push("/")}
+                    onClick={() => router.push("/register")}
                 >create account</p>
             </div>
         </div>

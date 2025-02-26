@@ -6,9 +6,13 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useRouter } from 'next/navigation';
 import ThemeSwitcher from '@/components/themeSwitcher/ThemeSwitcher'
+import { logoutUser } from '@/api/auth/Auth';
 const Navbar: React.FC = () => {
     const router = useRouter();
-
+    const handleLogut = async () => {
+        await logoutUser();
+        router.push("/login");
+    };
     return (
         <div>
             <div className='w-full border-b-2 flex items-center justify-center pb-3 pt-3 dark:bg-darkerBG dark:border-darkBg'>
@@ -35,13 +39,16 @@ const Navbar: React.FC = () => {
                             <LuPenLine />
                             New Post
                         </button>
+                        {/* profile */}
 
-                        <div className='text-4xl text-gray-600 cursor-pointer dark:text-gray-400'>
+                        <div
+                            onClick={() => router.push("/profile")}
+                            className='text-4xl text-gray-600 cursor-pointer dark:text-gray-400'>
                             <FaRegUserCircle />
                         </div>
-                  
+
                         <button id='sign-in'
-                            onClick={() => router.push("/login")}
+                            onClick={handleLogut}
                             className='p-2 pr-6 pl-6 border  border-b-greenBg dark:text-white dark:border-none dark:hover:bg-darkTextGreen flex items-center justify-center gap-2  transition duration-300 rounded-lg text-black font-roboto  hover:text-textGreen hover:border hover:border-b-greenBg '>
 
                             Logout

@@ -9,8 +9,7 @@ export const loginUser = async (email: string, password: string) => {
             withCredentials: true
         });
         console.log(response.data);
-        alert("Login Successful");
-        
+
     } catch (error) {
         console.error(error);
         alert("Login Failed");
@@ -34,5 +33,16 @@ export const registerUser = async (email: string, username: string, firstName: s
     } catch (error) {
         console.error(error);
 
+    }
+};
+
+export const logoutUser = async () => { 
+    try {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/logout`, {
+            withCredentials: true
+        });
+        console.log(response.data); 
+    } catch (error) {
+        return console.error(error);
     }
 };
