@@ -8,10 +8,10 @@ export const createNewPost = async (title: string, content: string) => {
         }, {
             withCredentials: true
         });
-        console.log(response.data);
+        (response.data);
 
     } catch (error) {
-        console.log(error, "error in create post");
+        (error, "error in create post");
 
     }
 };
@@ -21,7 +21,7 @@ export const getAllPosts = async () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/get-all-posts`, { 
             withCredentials: true 
         });
-        console.log(response.data.posts);
+        (response.data.posts);
         return response.data.posts;
     } catch (error) {
         console.error("An error occurred while getting post datas!", error);

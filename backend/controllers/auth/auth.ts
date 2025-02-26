@@ -28,7 +28,6 @@ const registerController = async (
             data: newUser
         });
     } catch (err) {
-        console.log(err)
         return res.status(500).json({ error: err.message || 'Registration failed' });
     }
 };
@@ -63,7 +62,6 @@ const logoutController = async (req: any, res: any) => {
             message: 'Logout successful',
         });
     } catch (error) {
-        console.error("Logout Error:", error);
         return res.status(500).json({ error: "An error occurred while logging out!" });
     }
 };

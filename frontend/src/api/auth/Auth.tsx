@@ -8,7 +8,6 @@ export const loginUser = async (email: string, password: string) => {
         }, {
             withCredentials: true
         });
-        console.log(response.data);
 
     } catch (error) {
         console.error(error);
@@ -26,7 +25,6 @@ export const registerUser = async (email: string, username: string, firstName: s
             password
         });
         if (response.data) {
-            console.log(response.data);
         };
 
 
@@ -41,7 +39,6 @@ export const logoutUser = async () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/logout`, {
             withCredentials: true
         });
-        console.log(response.data); 
     } catch (error) {
         return console.error(error);
     }
