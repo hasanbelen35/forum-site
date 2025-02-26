@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
     const router = useRouter();
     const handleLogut = async () => {
         await logoutUser();
-        router.push("/login");
+        router.push("/auth/login");
     };
     return (
         <div>
@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
 
                         <button id='sign-in'
                             onClick={handleLogut}
-                            className='p-2 pr-6 pl-6 border  border-b-greenBg dark:text-white dark:border-none dark:hover:bg-darkTextGreen flex items-center justify-center gap-2  transition duration-300 rounded-lg text-black font-roboto  hover:text-textGreen hover:border hover:border-b-greenBg '>
+                            className='p-2 pr-6 pl-6 border  border-b-greenBg dark:text-white dark:border-none dark:hover:bg-darkTextGreen flex items-center justify-center gap-2  transition duration-300 rounded-lg text-black font-roboto  hover:text-textGreen hover:border hover:border-b-greenBg dark:bg-darkTextGreen '>
 
                             Logout
                         </button>

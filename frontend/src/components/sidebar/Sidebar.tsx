@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import ProtectedRoute from '@/components/ProtectedRoutes';
 
 interface SidebarINTF {
   name: string;
@@ -19,7 +20,8 @@ const Sidebar = () => {
   const router = useRouter();
 
   return (
-    <div id="sidebar" className="flex flex-col justify-center dark:bg-darkerBG   items-center p-4 bg-white rounded-xl h-min w-60 h-full">
+    <ProtectedRoute>
+    <div id="sidebar" className="flex flex-col justify-center dark:bg-darkerBG border border-gray-300 dark:border-none  items-center p-4 bg-white rounded-xl h-min w-60 h-full">
       {sidebarItems && sidebarItems.map((item, index) => (
         <div key={index} className="w-full mb-4">
           <button
@@ -31,6 +33,8 @@ const Sidebar = () => {
         </div>
       ))}
     </div>
+    </ProtectedRoute>
+
   );
 };
 

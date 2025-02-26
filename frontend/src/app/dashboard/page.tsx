@@ -1,10 +1,10 @@
-import Dashboard from '@/pages/Dashboard/Dashboard'
+import DashboardPage from '@/pages/Dashboard/DashboardPage'
 import React from 'react'
 
 const page = () => {
   return (
-    <div className='container mx-auto '>
-      <Dashboard />
+    <div >
+      <DashboardPage />
     </div>
   )
 }

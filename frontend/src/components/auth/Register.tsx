@@ -20,7 +20,7 @@ const Register = () => {
         setFirstName('');
         setLastName('');
         setPassword('');
-        router.push("/login");
+        router.push("/auth/login");
     };
 
     return (
@@ -98,7 +98,7 @@ const Register = () => {
             </form>
             <div className='text-black dark:text-white flex flex-col items-center justify-center mt-5'>
                 <p> Have you already an acount?</p>
-                <span className='text-greenBg cursor-pointer underline' onClick={()=> router.push("/login") }>Sign In</span>
+                <span className='text-greenBg cursor-pointer underline' onClick={()=> router.push("/auth/login") }>Sign In</span>
             </div>
         </div>
     );
