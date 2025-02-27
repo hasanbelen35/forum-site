@@ -145,6 +145,8 @@ const ProfilePage: React.FC = () => {
                     ) : (
                         <p className="text-center text-red-500">Kullanıcı bulunamadı.</p>
                     )}
+                   <pre className="text-white text-green-400">{JSON.stringify(userData, null, 2)}</pre>
+
                 </div>
             </div>
         </ProtectedRoute>

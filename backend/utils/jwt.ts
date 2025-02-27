@@ -21,7 +21,7 @@ export const sendJWTtokenToClient = (user: any, res: any) => {
 
     return res.status(200).cookie('access-token', token, {
         httpOnly: true,
-        expires: new Date(Date.now() + parseInt(JWT_COOKIE_EXPIRES) * 1000 * 60),
+        expires: new Date(Date.now() + parseInt(JWT_COOKIE_EXPIRES || '0') * 1000 * 60),
         secure: NODE_ENV === 'development' ? false : true
     }).json({
         success: true,
@@ -38,7 +38,7 @@ export const isTokenIncluded = (req: any) => {
 export const verifyToken = (token: string) => {
     try {
         const decoded = jwt.verify(token, JWT_SECRET_KEY as string);
-        
+
         return decoded;
     } catch (error) {
         throw new Error('Invalid token');

@@ -19,7 +19,8 @@ export default {
         textGreen: "#82BD4E",
         darkerBG: "#262626",
         darkBg: "#2D2D2D",
-        darkTextGreen:"#82BF4E"
+        darkTextGreen:"#82BF4E",
+        footerGreen:"#7CB24C"
       },
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],

@@ -2,20 +2,40 @@
 import React, { useState } from 'react';
 import { loginUser } from '../../api/auth/Auth';
 import { useRouter } from 'next/navigation'
+import { AiTwotoneEyeInvisible, AiTwotoneEye } from "react-icons/ai";
+import { useEffect } from 'react';
 const Login = () => {
     const router = useRouter();
     // STATES
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+    const [rememberMe, setRememberMe] = useState<boolean>(false);
+
+    useEffect(() => {
+        const savedEmail = localStorage.getItem('email');
+        if (savedEmail) {
+            setEmail(savedEmail);
+            setRememberMe(true);
+        }
+    }, []);
 
     // HANDLE SUBMIT
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const login = await loginUser(email, password);
+        await loginUser(email, password);
 
-            router.push('/dashboard');
-        
+        if (rememberMe) {
+            localStorage.setItem('email', email);
+        } else {
+            localStorage.removeItem('email');
+        }
 
+        router.push('/dashboard');
+    };
+    // HANDLE PASSWORD VISIBILITY
+    const handlePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
     };
 
     return (
@@ -34,16 +54,24 @@ const Login = () => {
                     />
                 </div>
 
-                <div className="flex flex-col">
-                    <label htmlFor="password" className="text-lg text-gray-700 dark:text-gray-400">Password</label>
+                <div className="flex flex-col relative">
+                    <label htmlFor="password" className="text-lg text-gray-700 dark:text-gray-400">
+                        Password
+                    </label>
                     <input
-                        type="password"
+                        type={isPasswordVisible ? "text" : "password"}
                         id="password"
-                        className="mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="mt-2 p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Enter your password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <span
+                        className="absolute text-xl right-3 top-[52px] cursor-pointer text-gray-500 hover:text-gray-700"
+                        onClick={handlePasswordVisibility}
+                    >
+                        {isPasswordVisible ? <AiTwotoneEye /> : <AiTwotoneEyeInvisible />}
+                    </span>
                 </div>
 
                 <div className="flex justify-center mt-6">
@@ -58,7 +86,11 @@ const Login = () => {
 
             <div className=' text-black dark:text-white font-roboto flex items-center justify-between mt-6'>
                 <div className='flex items-center justify-center gap-1'>
-                    <input type="checkbox" className='cursor-pointer' />
+                    <input
+                        type="checkbox"
+                        className='cursor-pointer'
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)} />
                     Remember Me
                 </div>
                 <p className='dark:text-darkTextGreen cursor-pointer'>Forget password</p>
