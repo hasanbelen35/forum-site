@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect } from "react";
-import { usePostStore } from "@/store/usePostStore"; 
+import { usePostStore } from "@/store/usePostStore";
 import ProtectedRoute from "@/components/ProtectedRoutes";
 import { FaCommentDots } from "react-icons/fa";
 import { AiFillLike } from "react-icons/ai";
 import { IoSaveOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+import { useProfileStore } from "@/store/useProfileStore";
 
 // TODO : WILL DO PAGINATION 
 // TODO : WILL DO PAGINATION 
@@ -13,18 +14,26 @@ import { CgProfile } from "react-icons/cg";
 
 const Dashboard = () => {
     const { posts, fetchPosts } = usePostStore();
+    const { userData, fetchUserData } = useProfileStore();
 
     useEffect(() => {
         fetchPosts();
     }, []);
-
+    useEffect(() => {
+        fetchUserData();
+    }, []);
     return (
         <ProtectedRoute>
+            <div>
+                hosgeldın     {userData.username}
+            </div>
             <div className="h-screen bg-grayBg dark:bg-darkBg flex overflow-hidden">
+
                 <div className="flex-1 overflow-auto">
                     <div className="p-4 ml-4 rounded-xl bg-white dark:border-none dark:bg-darkerBG dark:text-white border border-gray-300">
                         <h1 className="text-2xl">ALL POSTS</h1>
                     </div>
+
 
                     <div className="flex flex-wrap justify-center flex-col">
                         {posts.length > 0 ? (

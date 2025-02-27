@@ -1,4 +1,4 @@
-import { createNewPost, getAllPosts, getAllPostByUserId } from "../../services/post/postServices.ts";
+import { createNewPost, getAllPosts, getAllPostByUserId, updatePostByUser } from "../../services/post/postServices.ts";
 
 export const createPostController = async (req: any, res: any) => {
     try {
@@ -101,6 +101,38 @@ export const getPostsByUserController = async (req: any, res: any) => {
         return res.status(500).json({
             success: false,
             message: "Server error occurred while fetching user posts."
+        });
+    }
+};
+
+// update post by user
+
+export const updatePostController = async (req: any, res: any) => {
+    try {
+        const userId = req.user?.id;
+        const { postId, title, content } = req.body;
+
+        if (!userId || !postId || !title || !content) {
+            return res.status(400).json({
+                success: false,
+                message: "All place required"
+            });
+        }
+
+        const result = await updatePostByUser({ postId, userId, title, content });
+
+      
+
+        return res.status(200).json({
+            success:true,
+            data:result
+        });
+
+    } catch (error: any) {
+        console.error("an error ocurred when post updating:", error.message);
+        return res.status(500).json({
+            success: false,
+            message: "an error ocurred when post updating:"
         });
     }
 };

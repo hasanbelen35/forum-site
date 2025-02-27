@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 export const checkPostOwner = async (req: any, res: any, next: any) => {
     try {
         const userId: number = req.user.id; 
-        const postId: number = req.params.id || req.body.id; 
+        const postId: number = Number(req.body.id || req.params.id); 
 
         if (!postId) {
             return res.status(400).json({
@@ -34,6 +34,7 @@ export const checkPostOwner = async (req: any, res: any, next: any) => {
         
         next();
     } catch (error) {
+        console.log(error)
         return res.status(500).json({
             success: false,
             message: "An error occurred while checking post ownership!"

@@ -4,8 +4,8 @@ import { registerController } from '../controllers/auth/auth.ts';
 import { loginController } from '../controllers/auth/auth.ts';
 import { getAccessToRoute } from '../middleware/auth/authMiddleware.ts';
 import { logoutController } from '../controllers/auth/auth.ts';
-import { createPostController, getPostsByUserController } from '../controllers/post/post.ts';
-//import { checkPostOwner } from '../middleware/post/postMiddleware.ts'
+import { createPostController, getPostsByUserController, updatePostController } from '../controllers/post/post.ts';
+import { checkPostOwner } from '../middleware/post/postMiddleware.ts'
 import { getAllPostsController } from '../controllers/post/post.ts';
 import { getUserMeController } from '../controllers/user/user.ts';
 import { editUserMeController } from '../controllers/user/user.ts';
@@ -24,5 +24,6 @@ routes.put('/editUserMe', getAccessToRoute, editUserMeController);
 //routes.get("/posts", getPaginatedPostsController); 
 routes.get('/getPostsByUserId', getAccessToRoute, getPostsByUserController);
 
-routes.get('/me', getAccessToRoute, me)
+routes.get('/me', getAccessToRoute, me);
+routes.put('/update-post-by-user/:id', getAccessToRoute, checkPostOwner, updatePostController);
 export default routes;

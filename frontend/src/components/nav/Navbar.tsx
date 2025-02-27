@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { LuPenLine } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -7,14 +7,31 @@ import { useRouter } from "next/navigation";
 import ThemeSwitcher from "@/components/themeSwitcher/ThemeSwitcher";
 import { logoutUser } from "@/api/auth/Auth";
 import { useProfileStore } from "@/store/useProfileStore";
+
 const Navbar: React.FC = () => {
     const router = useRouter();
     const [isOpenProfile, setIsOpenProfile] = useState<boolean>(false);
-    const { userData } = useProfileStore();
+    const profileMenuRef = useRef<HTMLDivElement>(null);
+    const { userData} = useProfileStore();
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (profileMenuRef.current && !profileMenuRef.current.contains(event.target as Node)) {
+                setIsOpenProfile(false);
+            }
+        };
+
+        if (isOpenProfile) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [isOpenProfile]);
 
     const handleToggleProfile = () => {
-        setIsOpenProfile(!isOpenProfile);
-
+        setIsOpenProfile((prev) => !prev);
     };
 
     const handleLogout = async () => {
@@ -22,18 +39,15 @@ const Navbar: React.FC = () => {
         router.push("/auth/login");
     };
 
+    const profilePicture = useMemo(() => userData?.profile?.profilePicture, [userData]);
     return (
         <div>
             {/* Ana Navbar */}
             <div className="w-full border-b-2 flex items-center justify-center pb-3 pt-3 dark:bg-darkerBG dark:border-darkBg">
                 <div className="container mx-auto flex justify-between items-center px-4">
                     {/* LOGO */}
-                    <div id="logo" className="cursor-pointer" onClick={() => router.push("/")}>
-                        <img
-                            src="/logo.jpg"
-                            alt="Logo"
-                            className="w-24 h-auto mix-blend-multiply"
-                        />
+                    <div id="logo" className="cursor-pointer" onClick={() => router.push("/dashboard")}>
+                        <img src="/logo.jpg" alt="Logo" className="w-24 h-auto mix-blend-multiply" />
                     </div>
 
                     {/* Arama Çubuğu */}
@@ -61,16 +75,16 @@ const Navbar: React.FC = () => {
                         </button>
 
                         {/* Profil Butonu */}
-                        <div className="relative">
+                        <div className="relative" ref={profileMenuRef}>
                             <div
                                 onClick={handleToggleProfile}
                                 className="text-4xl text-gray-600 cursor-pointer dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition"
                             >
-                                {userData?.profile?.profilePicture ? (
+                                {profilePicture? (
                                     <img
-                                        src={userData.profile.profilePicture}
+                                        src={profilePicture}
                                         alt="Profil Resmi"
-                                        className="w-10 h-10 object-cover  rounded-full border-2 border-white"
+                                        className="w-10 h-10 object-cover rounded-full border-2 border-white"
                                     />
                                 ) : (
                                     <div className="w-12 h-12 rounded-full bg-gray-500 flex items-center justify-center text-sm">
@@ -81,9 +95,12 @@ const Navbar: React.FC = () => {
 
                             {/* Açılır Profil Menüsü */}
                             {isOpenProfile && (
-                                <div className="absolute right-0 top-full mt-3 w-52 rounded-lg bg-white shadow-lg dark:bg-darkBg  border border-gray-200 dark:border-gray-700 animate-fadeIn">
+                                <div className="absolute right-0 top-full mt-3 w-52 rounded-lg bg-white shadow-lg dark:bg-darkBg border border-gray-200 dark:border-gray-700 animate-fadeIn">
                                     {/* Profile */}
-                                    <div onClick={() => router.push("/profile")} className="p-3 hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer">
+                                    <div
+                                        onClick={() => router.push("/profile")}
+                                        className="p-3 hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer"
+                                    >
                                         <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                                             Profile
                                         </p>
@@ -92,8 +109,12 @@ const Navbar: React.FC = () => {
                                         </p>
                                     </div>
                                     <hr className="border-gray-200 dark:border-gray-700" />
+
                                     {/* DATA */}
-                                    <div onClick={() => router.push("/user-data")} className="p-3  hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer">
+                                    <div
+                                        onClick={() => router.push("/user-data")}
+                                        className="p-3 hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer"
+                                    >
                                         <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                                             Data
                                         </p>
@@ -102,6 +123,7 @@ const Navbar: React.FC = () => {
                                         </p>
                                     </div>
                                     <hr className="border-gray-200 dark:border-gray-700" />
+
                                     <button
                                         onClick={handleLogout}
                                         className="w-full text-left p-3 text-sm text-red-500 hover:bg-red-100 dark:hover:bg-red-900 rounded-b-lg"
@@ -112,8 +134,6 @@ const Navbar: React.FC = () => {
                             )}
                         </div>
                     </div>
-
-
                 </div>
             </div>
 

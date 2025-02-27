@@ -38,7 +38,7 @@ export const usePostStore = create<PostStore>((set) => ({
         try {
             const data = await getPostsByUser();
             if (data.success) {
-                set({ userPosts: data.data }); // ✅ Hatalı `data` yerine `data.data` kullanıldı
+                set({ userPosts: data.data }); 
             } else {
                 console.error("API success:false döndü!", data);
             }

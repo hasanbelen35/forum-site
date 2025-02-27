@@ -36,7 +36,7 @@ export const registerUser = async (email: string, username: string, firstName: s
 
 export const logoutUser = async () => { 
     try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/logout`, {
+         await axios.get(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/logout`, {
             withCredentials: true
         });
     } catch (error) {
