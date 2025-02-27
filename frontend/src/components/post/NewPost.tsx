@@ -11,9 +11,9 @@ const NewPost = () => {
 
     const handleCreatePost = async () => {
         if (!title.trim() || !content.trim()) {
-            alert("Başlık ve içerik boş olamaz!");
             return;
         }
+
 
         try {
             await createNewPost(title, content);
@@ -63,6 +63,8 @@ const NewPost = () => {
                                 className="dark:bg-darkBg dark:text-white p-3 h-32 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
                             />
                         </div>
+
+                   
 
                         {/* Submit Button */}
                         <button

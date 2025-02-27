@@ -1,156 +1,90 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
-import { getUserDatas, editUserDatas } from "@/api/user/user";
+import React, { useEffect } from "react";
 import ProtectedRoute from "@/components/ProtectedRoutes";
-interface ProfileData {
-    profilePicture: string;
-    birthday: string;
-    linkedin: string;
-    github: string;
-    website: string;
-    twitter: string;
-    instagram: string;
-    facebook: string;
-}
-
-interface UserData {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    username: string;
-    profile?: ProfileData;
-}
+import { useProfileStore } from "@/store/useProfileStore";
 
 const ProfilePage: React.FC = () => {
-    const [userData, setUserData] = useState<UserData | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [profileData, setProfileData] = useState<ProfileData>({
-        profilePicture: "",
-        birthday: "",
-        linkedin: "",
-        github: "",
-        website: "",
-        twitter: "",
-        instagram: "",
-        facebook: "",
-    });
+  const { userData, profileData, loading, fetchUserData, updateProfile } = useProfileStore();
 
-    // Kullanıcı verisini çek
-    const fetchUserData = useCallback(async () => {
-        setLoading(true);
-        try {
-            const data = await getUserDatas();
-            if (data) {
-                setUserData(data);
-                if (data.profile) {
-                    setProfileData(data.profile);
-                }
-            }
-        } catch (error) {
-            console.error("Kullanıcı verisi alınırken hata oluştu:", error);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
-    useEffect(() => {
-        fetchUserData();
-    }, [fetchUserData]);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    useProfileStore.setState((state) => ({
+      profileData: {
+        ...state.profileData,
+        [name]: name === "birthday" ? new Date(value).toISOString() : value,
+      },
+    }));
+  };
 
-    // Kullanıcı profilini güncelle
-    const handleEditDatas = async () => {
-        setLoading(true);
-        try {
-            const updatedUser = await editUserDatas(profileData);
-            if (updatedUser) {
-                setUserData(updatedUser);
-            }
-        } catch (error) {
-            console.error("Profil güncellenirken hata oluştu:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const handleEditDatas = async () => {
+    await updateProfile(profileData);
+  };
 
-    // Input değişikliklerini yönet
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setProfileData((prev) => ({
-            ...prev,
-            [name]: name === "birthday" ? new Date(value).toISOString() : value,
-        }));
-    };
+  const formatDate = (dateString: string | null) => {
+    return dateString ? dateString.split("T")[0] : "";
+  };
 
-    // Tarihi formatla (YYYY-MM-DD)
-    const formatDate = (dateString: string | null) => {
-        return dateString ? dateString.split("T")[0] : "";
-    };
+  return (
+    <ProtectedRoute>
+      <div className="flex justify-center items-center h-screen w-full bg-gray-100 dark:bg-darkBg">
+        <div className="bg-white w-full dark:bg-darkerBG p-8 rounded-lg shadow-lg w-96">
+          <h1 className="text-2xl font-bold text-center text-darkTextGreen mb-4">Profil Bilgileri</h1>
 
-    // Profil alanları için yapı
-    const profileFields: { name: keyof ProfileData; type: string; placeholder: string }[] = [
-        { name: "profilePicture", type: "text", placeholder: "Profil Resmi URL" },
-        { name: "birthday", type: "date", placeholder: "Doğum Günü" },
-        { name: "linkedin", type: "text", placeholder: "LinkedIn" },
-        { name: "github", type: "text", placeholder: "GitHub" },
-        { name: "website", type: "text", placeholder: "Web Sitesi" },
-        { name: "twitter", type: "text", placeholder: "Twitter" },
-        { name: "instagram", type: "text", placeholder: "Instagram" },
-        { name: "facebook", type: "text", placeholder: "Facebook" },
-    ];
+          {loading ? (
+            <p className="text-center text-gray-500">Yükleniyor...</p>
+          ) : userData ? (
+            <div className="space-y-4 dark:text-white">
+              <p>
+                <strong className="dark:text-darkTextGreen">Ad Soyad:</strong> {userData.firstName} {userData.lastName}
+              </p>
+              <p>
+                <strong className="dark:text-darkTextGreen">Email:</strong> {userData.email}
+              </p>
+              <p>
+                <strong className="dark:text-darkTextGreen">Kullanıcı Adı:</strong> {userData.username}
+              </p>
 
-    return (
-        <ProtectedRoute>
-            <div className="flex justify-center items-center h-screen w-full bg-gray-100 dark:bg-darkBg">
-                <div className="bg-white dark:bg-darkerBG p-8 rounded-lg shadow-lg w-96">
-                    <h1 className="text-2xl font-bold text-center text-darkTextGreen mb-4">
-                        Profil Bilgileri
-                    </h1>
+              <h2 className="text-xl font-semibold mt-4 text-center">Profili Güncelle</h2>
 
-                    {loading ? (
-                        <p className="text-center text-gray-500">Yükleniyor...</p>
-                    ) : userData ? (
-                        <div className="space-y-4">
-                            <p>
-                                <strong>Ad Soyad:</strong> {userData.firstName} {userData.lastName}
-                            </p>
-                            <p>
-                                <strong>Email:</strong> {userData.email}
-                            </p>
-                            <p>
-                                <strong>Kullanıcı Adı:</strong> {userData.username}
-                            </p>
+              {[
+                { name: "profilePicture", type: "text", placeholder: "Profil Resmi URL" },
+                { name: "birthday", type: "date", placeholder: "Doğum Günü" },
+                { name: "linkedin", type: "text", placeholder: "LinkedIn" },
+                { name: "github", type: "text", placeholder: "GitHub" },
+                { name: "website", type: "text", placeholder: "Web Sitesi" },
+                { name: "twitter", type: "text", placeholder: "Twitter" },
+                { name: "instagram", type: "text", placeholder: "Instagram" },
+                { name: "facebook", type: "text", placeholder: "Facebook" },
+              ].map((field) => (
+                <input
+                  key={field.name}
+                  type={field.type}
+                  name={field.name}
+                  value={field.name === "birthday" ? formatDate(profileData[field.name]) : profileData[field.name]}
+                  onChange={handleChange}
+                  placeholder={field.placeholder}
+                  className="w-full dark:bg-darkerBG dark:text-white p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                />
+              ))}
 
-                            <h2 className="text-xl font-semibold mt-4 text-center">Profili Güncelle</h2>
-
-                            {profileFields.map((field) => (
-                                <input
-                                    key={field.name}
-                                    type={field.type}
-                                    name={field.name}
-                                    value={field.name === "birthday" ? formatDate(profileData[field.name]) : profileData[field.name]}
-                                    onChange={handleChange}
-                                    placeholder={field.placeholder}
-                                    className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                                />
-                            ))}
-
-                            <button
-                                onClick={handleEditDatas}
-                                className="w-full bg-green-600 text-white py-3 rounded-md text-lg transition-all duration-300 hover:bg-green-700"
-                            >
-                                Güncelle
-                            </button>
-                        </div>
-                    ) : (
-                        <p className="text-center text-red-500">Kullanıcı bulunamadı.</p>
-                    )}
-                   <pre className="text-white text-green-400">{JSON.stringify(userData, null, 2)}</pre>
-
-                </div>
+              <button
+                onClick={handleEditDatas}
+                className="w-full bg-green-600 text-white py-3 rounded-md text-lg transition-all duration-300 hover:bg-green-700"
+              >
+                Güncelle
+              </button>
             </div>
-        </ProtectedRoute>
-    );
+          ) : (
+            <p className="text-center text-red-500">Kullanıcı bulunamadı.</p>
+          )}
+        </div>
+      </div>
+    </ProtectedRoute>
+  );
 };
 
 export default ProfilePage;

@@ -2,22 +2,19 @@ import { createNewPost, getAllPosts } from "../../services/post/postServices.ts"
 
 export const createPostController = async (req: any, res: any) => {
     try {
-        const userId: number = req.user.id;  // Kullanıcı id'si alınır
+        const userId: number = req.user.id;
 
-        const { title, content } = req.body;  // Request body'den post başlığı ve içeriği alınır
+        const { title, content } = req.body;
 
-        // Gerekli alanlar kontrol ediliyor
-        if (!userId || !title || !content) {
+        if (!userId || !title || !content ) {
             return res.status(400).json({
                 success: false,
                 message: "userId, title, and content are required!"
             });
         }
 
-        // Yeni post oluşturuluyor
         const post = await createNewPost(userId, title, content);
 
-        // Post oluşturulamazsa hata dönülüyor
         if (!post) {
             return res.status(500).json({
                 success: false,
@@ -25,7 +22,6 @@ export const createPostController = async (req: any, res: any) => {
             });
         }
 
-        // Başarıyla post oluşturulursa 200 dönülüyor
         return res.status(200).json({
             success: true,
             data: post
@@ -33,7 +29,6 @@ export const createPostController = async (req: any, res: any) => {
     } catch (error) {
         console.error(error);
 
-        // Hata mesajı dönülüyor
         return res.status(500).json({
             success: false,
             message: "There is a problem in creating the post!"
@@ -58,7 +53,7 @@ export const getAllPostsController = async (req: any, res: any) => {
             posts: data
         });
     } catch (error) {
-       // console.error(error);
+        // console.error(error);
 
         return res.status(500).json({
             success: false,

@@ -6,11 +6,11 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import ThemeSwitcher from "@/components/themeSwitcher/ThemeSwitcher";
 import { logoutUser } from "@/api/auth/Auth";
-
+import { useProfileStore } from "@/store/useProfileStore";
 const Navbar: React.FC = () => {
     const router = useRouter();
     const [isOpenProfile, setIsOpenProfile] = useState<boolean>(false);
-
+    const { userData } = useProfileStore();
 
     const handleToggleProfile = () => {
         setIsOpenProfile(!isOpenProfile);
@@ -66,7 +66,17 @@ const Navbar: React.FC = () => {
                                 onClick={handleToggleProfile}
                                 className="text-4xl text-gray-600 cursor-pointer dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition"
                             >
-                                <FaRegUserCircle />
+                                {userData?.profile?.profilePicture ? (
+                                    <img
+                                        src={userData.profile.profilePicture}
+                                        alt="Profil Resmi"
+                                        className="w-10 h-10 object-cover  rounded-full border-2 border-white"
+                                    />
+                                ) : (
+                                    <div className="w-12 h-12 rounded-full bg-gray-500 flex items-center justify-center text-sm">
+                                        <FaRegUserCircle />
+                                    </div>
+                                )}
                             </div>
 
                             {/* Açılır Profil Menüsü */}
