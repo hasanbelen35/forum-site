@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
                                     </div>
                                     <hr className="border-gray-200 dark:border-gray-700" />
                                     {/* DATA */}
-                                    <div className="p-3  hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer">
+                                    <div onClick={() => router.push("/user-data")} className="p-3  hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer">
                                         <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                                             Data
                                         </p>
