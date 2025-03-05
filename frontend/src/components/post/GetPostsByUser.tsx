@@ -17,6 +17,7 @@ const UserPosts = () => {
                         <li key={post.id} className="border p-4 mb-2">
                             <h3 className="font-semibold">{post.title}</h3>
                             <p>{post.content}</p>
+                           
                         </li>
                     ))}
                 </ul>

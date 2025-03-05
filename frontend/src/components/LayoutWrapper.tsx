@@ -21,7 +21,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         <>
             <Navbar />
             <div className="dark:bg-darkBg bg-grayBg flex-grow">
-                <main className="container mx-auto flex gap-3 px-4 md:px-8 lg:px-16 dark:bg-darkBg pt-4">
+                <main className="container mx-auto pb-4 flex gap-1 px-4 md:px-8 lg:px-16 dark:bg-darkBg pt-4">
                     <aside className="flex md:block">
                         <Sidebar />
                     </aside>

@@ -103,3 +103,30 @@ export const updatePostByUser = async (updateData: UpdateData) => {
         };
     }
 };
+
+//  DELETE POST BY ID THAT BELONGS USER
+export const deletePostByIdService = async (userId: number, postId: number) => {
+    try {
+
+        const post = await prisma.post.findFirst({
+            where: {
+                id: postId,
+                userId: userId,
+            },
+        });
+
+        if (!post) {
+            throw new Error("Bu gönderiyi silme yetkiniz yok veya gönderi bulunamadı.");
+        }
+
+        await prisma.post.delete({
+            where: { id: postId },
+        });
+
+        return { success: true, message: "Post deleted succesfully" };
+    } catch (error) {
+       
+
+        return { success: false, message: "An error ocurred while post deleting!!" };
+    }
+};

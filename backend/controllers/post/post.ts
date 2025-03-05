@@ -1,4 +1,4 @@
-import { createNewPost, getAllPosts, getAllPostByUserId, updatePostByUser } from "../../services/post/postServices.ts";
+import { createNewPost, getAllPosts, getAllPostByUserId, updatePostByUser, deletePostByIdService } from "../../services/post/postServices.ts";
 
 export const createPostController = async (req: any, res: any) => {
     try {
@@ -121,11 +121,11 @@ export const updatePostController = async (req: any, res: any) => {
 
         const result = await updatePostByUser({ postId, userId, title, content });
 
-      
+
 
         return res.status(200).json({
-            success:true,
-            data:result
+            success: true,
+            data: result
         });
 
     } catch (error: any) {
@@ -134,5 +134,31 @@ export const updatePostController = async (req: any, res: any) => {
             success: false,
             message: "an error ocurred when post updating:"
         });
+    }
+};
+
+//  delete post by id 
+export const deletePostByİd = async (req: any, res: any) => {
+    try {
+        const userId: number = req.user?.id;
+        const postId: number = parseInt(req.params.id);
+       
+        if (!userId || !postId) {
+            return res.status(400).json({ success: false, message: "Invalid postId or userId" });
+        };
+
+        const data = await deletePostByIdService(userId, postId)
+        if (!data) {
+            return res.status(400).json({ success: false, message: "An error while post deleting" });
+        };
+
+        res.status(200).json({
+            success: true,
+            message: 'Post deletes successfully'
+        });
+    } catch (error) {
+        //    console.log(error)
+        return res.status(500).json({ success: false, message: "An error while post deleting" });
+
     }
 };

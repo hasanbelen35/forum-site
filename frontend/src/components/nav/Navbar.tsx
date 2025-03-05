@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
                         {/* Yeni Post Butonu */}
                         <button
                             onClick={() => router.push("/newPost")}
-                            className="p-2 pr-6 pl-6 border dark:border-green-400 text-textGreen border-b-greenBg flex items-center gap-2 rounded-lg hover:bg-greenBg hover:text-white transition"
+                            className="p-2 font-medium pr-6 pl-6 border dark:border-green-400 text-textGreen border-b-greenBg flex items-center gap-2 rounded-lg hover:bg-greenBg hover:text-white transition"
                         >
                             <LuPenLine />
                             New Post

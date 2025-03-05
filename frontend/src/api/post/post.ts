@@ -60,11 +60,10 @@ export const getPostsByUser = async () => {
 
 export const updatePostByUser = async (postId: number, title: string, content: string) => {
     try {
-        console.log("Data sent to API:", { postId, title, content });
 
         const response = await axios.put(
             `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/update-post-by-user/${postId}`,
-            { postId, title, content }, 
+            { postId, title, content },
             { withCredentials: true }
         );
         return response.data;
@@ -73,3 +72,21 @@ export const updatePostByUser = async (postId: number, title: string, content: s
         return { success: false, message: "An error occurred while updating the post!" };
     }
 };
+
+
+export const deletePostById = async (postId: number) => {
+    try {
+        const response = await axios.delete(
+            `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/delete-post-by-id/${postId}`,
+            { withCredentials: true }
+        );
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error("An error occurred while deleting the post!", error);
+        return { success: false, message: "An error occurred while deleting the post!" };
+    }
+};
+
+
+

@@ -31,7 +31,7 @@ export const checkPostOwner = async (req: any, res: any, next: any) => {
             });
         }
 
-        
+        // if chech succeed next =
         next();
     } catch (error) {
         console.log(error)

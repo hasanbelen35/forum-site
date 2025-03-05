@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePostStore } from "@/store/usePostStore";
-import { updatePostByUser } from "@/api/post/post";
+import { deletePostById, updatePostByUser } from "@/api/post/post";
 
 const UserPosts = () => {
     const { userPosts, fetchUserPosts } = usePostStore();
@@ -9,13 +9,13 @@ const UserPosts = () => {
     const [newTitle, setNewTitle] = useState("");
     const [newContent, setNewContent] = useState("");
     const [loading, setLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string>("");
 
     useEffect(() => {
         fetchUserPosts();
     }, []);
 
     const handleEditClick = (post: { id: number; title: string; content: string }) => {
-        console.log("Editing Post:", post);
         setEditPost(post);
         setNewTitle(post.title);
         setNewContent(post.content);
@@ -24,16 +24,40 @@ const UserPosts = () => {
     const handleUpdate = async () => {
         if (!editPost) return;
         setLoading(true);
+        setErrorMessage("");
 
-        console.log("Updated Post ID:", editPost.id);
-        console.log("New Title:", newTitle);
-        console.log("New Content:", newContent);
+        try {
+            await updatePostByUser(editPost.id, newTitle, newContent);
+            fetchUserPosts();
+        } catch (error) {
+            setErrorMessage("Post güncellenirken hata oluştu.");
+            console.error("Post güncellenirken hata oluştu:", error);
+        } finally {
+            setLoading(false);
+            setEditPost(null);
+        }
+    };
 
-        await updatePostByUser(editPost.id, newTitle, newContent);
-        
-        setLoading(false);
-        setEditPost(null);
-        fetchUserPosts();
+    const handleDeletePost = async (postId: number) => {
+        if (!confirm("Bu gönderiyi silmek istediğinizden emin misiniz?")) return;
+
+        setLoading(true);
+        setErrorMessage("");
+
+        try {
+            const response = await deletePostById(postId);
+
+            if (response.success) {
+                fetchUserPosts(); // Silinen postu UI'dan kaldır
+            } else {
+                setErrorMessage("Post silinemedi: " + response.message);
+            }
+        } catch (error) {
+            setErrorMessage("Bir hata oluştu, lütfen tekrar deneyin.");
+            console.error("Post silinirken hata oluştu:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -48,17 +72,32 @@ const UserPosts = () => {
                                 <h3 className="font-semibold">{post.title}</h3>
                                 <p>{post.content}</p>
                             </div>
-                            <button
-                                onClick={() => handleEditClick(post)}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded"
-                            >
-                                Edit
-                            </button>
+                            <div className="flex flex-col justify-center items-center gap-3">
+                                <button
+                                    onClick={() => handleEditClick(post)}
+                                    className="bg-blue-500 dark:bg-darkerBG dark:hover:bg-darkBg transition-all duration-300 hover:bg-blue-700 w-24 text-white font-bold py-1 px-3 rounded"
+                                >
+                                    Düzenle
+                                </button>
+                                <button
+                                    onClick={() => handleDeletePost(post.id)}
+                                    className="bg-red-500 hover:bg-red-700 dark:bg-greenBg dark:hover:bg-green-900 transition-all duration-300 w-24 text-white font-bold py-1 px-3 rounded"
+                                    disabled={loading}
+                                >
+                                    {loading ? "Siliniyor..." : "Sil"}
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>
             ) : (
                 <p>You don't have any posts yet.</p>
+            )}
+
+            {errorMessage && (
+                <div className="text-red-500 mt-4">
+                    <p>{errorMessage}</p>
+                </div>
             )}
 
             {/* Edit Modal */}
@@ -86,7 +125,9 @@ const UserPosts = () => {
                             </button>
                             <button
                                 onClick={handleUpdate}
-                                className={`bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                                className={`bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded ${
+                                    loading ? "opacity-50 cursor-not-allowed" : ""
+                                }`}
                                 disabled={loading}
                             >
                                 {loading ? "Updating..." : "Update"}
