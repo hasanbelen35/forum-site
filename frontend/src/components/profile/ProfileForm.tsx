@@ -3,6 +3,17 @@ import React, { useEffect } from "react";
 import ProtectedRoute from "@/components/ProtectedRoutes";
 import { useProfileStore } from "@/store/useProfileStore";
 
+interface ProfileData {
+  profilePicture: string;
+  birthday: string;
+  linkedin: string;
+  github: string;
+  website: string;
+  twitter: string;
+  instagram: string;
+  facebook: string;
+}
+
 const ProfilePage: React.FC = () => {
   const { userData, profileData, loading, fetchUserData, updateProfile } = useProfileStore();
 
@@ -31,22 +42,16 @@ const ProfilePage: React.FC = () => {
   return (
     <ProtectedRoute>
       <div className="flex justify-center items-center h-screen w-full bg-gray-100 dark:bg-darkBg">
-        <div className="bg-white w-full dark:bg-darkerBG p-8 rounded-lg shadow-lg w-96">
+        <div className="bg-white dark:bg-darkerBG p-8 rounded-lg shadow-lg w-96">
           <h1 className="text-2xl font-bold text-center text-darkTextGreen mb-4">Profil Bilgileri</h1>
 
           {loading ? (
             <p className="text-center text-gray-500">Yükleniyor...</p>
           ) : userData ? (
             <div className="space-y-4 dark:text-white">
-              <p>
-                <strong className="dark:text-darkTextGreen">Ad Soyad:</strong> {userData.firstName} {userData.lastName}
-              </p>
-              <p>
-                <strong className="dark:text-darkTextGreen">Email:</strong> {userData.email}
-              </p>
-              <p>
-                <strong className="dark:text-darkTextGreen">Kullanıcı Adı:</strong> {userData.username}
-              </p>
+              <p><strong className="dark:text-darkTextGreen">Ad Soyad:</strong> {userData.firstName} {userData.lastName}</p>
+              <p><strong className="dark:text-darkTextGreen">Email:</strong> {userData.email}</p>
+              <p><strong className="dark:text-darkTextGreen">Kullanıcı Adı:</strong> {userData.username}</p>
 
               <h2 className="text-xl font-semibold mt-4 text-center">Profili Güncelle</h2>
 
@@ -64,7 +69,7 @@ const ProfilePage: React.FC = () => {
                   key={field.name}
                   type={field.type}
                   name={field.name}
-                  value={field.name === "birthday" ? formatDate(profileData[field.name]) : profileData[field.name]}
+                  value={field.name === "birthday" ? formatDate(profileData[field.name as keyof ProfileData]) : profileData[field.name as keyof ProfileData]}
                   onChange={handleChange}
                   placeholder={field.placeholder}
                   className="w-full dark:bg-darkerBG dark:text-white p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"

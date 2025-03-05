@@ -1,0 +1,12 @@
+services:
+  backend:
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/backend
+      - /backend/node_modules
+    env_file:
+      - ./.env  
+    command: ["npm", "run", "dev"]

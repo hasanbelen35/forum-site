@@ -1,7 +1,6 @@
 import { registerUser, loginUser } from '../../services/auth/authServices.ts';
 import { sendJWTtokenToClient } from '../../utils/jwt.ts';
 
-// RegisterUserInterface'ı tip tanımlama olarak doğrudan kullanabiliriz
 interface RegisterUserInterface {
     email: string;
     password: string;
@@ -10,7 +9,6 @@ interface RegisterUserInterface {
     lastName: string;
 };
 
-// LoginUser tipini de doğru şekilde kullanmalıyız
 interface LoginUser {
     email: string;
     password: string;

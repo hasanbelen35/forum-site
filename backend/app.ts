@@ -7,7 +7,6 @@ import router from './routes/route.ts';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 dotenv.config();
-
 DBconnection.connect();
 
 const prisma = new PrismaClient();

@@ -1,0 +1,31 @@
+# Node.js modülleri
+node_modules/
+
+# Paket kilit dosyaları
+package-lock.json
+yarn.lock
+
+# .env dosyası (gizli bilgiler içerdiği için)
+.env
+
+# Next.js tarafından üretilen derleme çıktıları
+.next/
+out/
+
+# Geçici dosyalar
+*.log
+*.tmp
+*.bak
+
+# IDE/Düzenleyici dosyaları
+.vscode/
+.idea/
+
+# OS ile ilgili dosyalar
+.DS_Store
+Thumbs.db
+
+# Test dosyaları
+tests/
+test/
+coverage/
