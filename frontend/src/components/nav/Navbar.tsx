@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
                         <input
                             type="text"
                             className="w-64 focus:border-none focus:ring-0 dark:bg-white outline-none"
-                            placeholder="Search post, hashtag, author..."
+                            placeholder="Gönderi , Yazar , Hashtag ara ..."
                         />
                         <AiOutlineSearch className="ml-2 text-gray-500" />
                     </div>
@@ -71,7 +71,7 @@ const Navbar: React.FC = () => {
                             className="p-2 font-medium pr-6 pl-6 border dark:border-green-400 text-textGreen border-b-greenBg flex items-center gap-2 rounded-lg hover:bg-greenBg hover:text-white transition"
                         >
                             <LuPenLine />
-                            New Post
+                            Yeni Gönderi
                         </button>
 
                         {/* Profil Butonu */}
@@ -102,10 +102,10 @@ const Navbar: React.FC = () => {
                                         className="p-3 hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer"
                                     >
                                         <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                                            Profile
+                                            Profil
                                         </p>
                                         <p className="text-xs text-gray-600 dark:text-gray-400">
-                                            User Settings
+                                        Profil Ayarları
                                         </p>
                                     </div>
                                     <hr className="border-gray-200 dark:border-gray-700" />
@@ -116,10 +116,10 @@ const Navbar: React.FC = () => {
                                         className="p-3 hover:bg-grayBg dark:hover:bg-darkerBG cursor-pointer"
                                     >
                                         <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
-                                            Data
+                                            Gönderiler
                                         </p>
                                         <p className="text-xs text-gray-600 dark:text-gray-400">
-                                            Account Details
+                                            Gönderiler Ayarları
                                         </p>
                                     </div>
                                     <hr className="border-gray-200 dark:border-gray-700" />
@@ -128,7 +128,7 @@ const Navbar: React.FC = () => {
                                         onClick={handleLogout}
                                         className="w-full text-left p-3 text-sm text-red-500 hover:bg-red-100 dark:hover:bg-red-900 rounded-b-lg"
                                     >
-                                        Logout
+                                        Çıkış Yap
                                     </button>
                                 </div>
                             )}

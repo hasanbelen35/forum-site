@@ -45,8 +45,8 @@ const AllPosts = () => {
 
                                 {/* BAŞLIK VE AÇIKLAMA */}
                                 <div className="pl-14 pt-2">
-                                    <h1 className="text-2xl font-semibold cursor-pointer">  {post.title}</h1>
-                                    <p className="text-sm mt-2">  {post.content}</p>
+                                    <h1 className="text-4xl font-serif cursor-pointer">  {post.title}</h1>
+                                    <p className="text-sm font-mono mt-2">  {post.content}</p>
                                 </div>
 
                                 {/* BUTONLAR: YORUM, BEĞENİ, KAYDET */}

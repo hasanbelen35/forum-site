@@ -1,12 +1,12 @@
 {
   "name": "forum-site",
   "version": "1.0.0",
-  "main": "dist/server.ts",
+  "main": "server.ts",
   "type": "module",
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.ts",
-    "dev": "nodemon --exec 'node --loader ts-node/esm' server.ts"
+    "dev": "ts-node -r tsconfig-paths/register server.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
@@ -27,6 +27,7 @@
     "@types/jsonwebtoken": "^9.0.8",
     "@types/node": "^22.13.1",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3"
   }
 }

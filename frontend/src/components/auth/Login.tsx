@@ -47,7 +47,7 @@ const Login = () => {
                     <input
                         type="email"
                         id="email"
-                        className="mt-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="mt-2 p-3 border border-gray-300 dark:bg-darkBg dark:text-white rounded-md focus:outline-none "
                         placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +61,7 @@ const Login = () => {
                     <input
                         type={isPasswordVisible ? "text" : "password"}
                         id="password"
-                        className="mt-2 p-3 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="mt-2 p-3 pr-10 border border-gray-300 dark:bg-darkBg dark:text-white  rounded-md focus:outline-none f"
                         placeholder="Enter your password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}

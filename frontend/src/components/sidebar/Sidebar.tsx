@@ -13,7 +13,7 @@ const Sidebar = () => {
     { name: "Anasayfa", route: "/dashboard" },
     { name: "Gündem Haberleri", route: "/gundem" },
     { name: "İletişim", route: "/iletisim" },
-    { name: "Kurallar", route: "/kurallar" },
+    { name: "Kurallar", route: "/site-rules" },
     { name: "Amacımız", route: "/amacimiz" }
   ];
 
@@ -26,7 +26,7 @@ const Sidebar = () => {
         <div key={index} className="w-full mb-4">
           <button
             onClick={() => router.push(item.route)} 
-            className="w-full py-2 px-4 text-left text-lg font-semibold dark:hover:bg-darkBg transition-all duration-200 text-black dark:text-gray-300 hover:bg-gray-300 rounded-md"
+            className="w-full font-mono py-2 px-4 text-left text-lg font-semibold dark:hover:bg-darkBg transition-all duration-200 text-black dark:text-gray-300 hover:bg-gray-300 rounded-md"
           >
             {item.name}
           </button>

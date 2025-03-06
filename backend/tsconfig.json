@@ -5,13 +5,28 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "outDir": "dist", // Çıktı dizini
     "skipLibCheck": true,
     "strict": true,
-    "baseUrl": "./",
+    "baseUrl": "./",  // Kök dizin olarak ayarlanır
     "paths": {
-      "*": ["node_modules/*"]
+      "@controllers/*": ["controllers/*"],
+      "@database/*": ["database/*"],  // `src` kaldırıldı, doğrudan `database` kullanıldı
+      "@interfaces/*": ["interfaces/*"],
+      "@prisma/*": ["prisma/*"],  // Eğer başka bir klasör kullanıyorsanız düzenleyin
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"]
     }
   },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
+
+
+
+

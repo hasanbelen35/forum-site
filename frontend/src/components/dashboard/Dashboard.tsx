@@ -14,7 +14,7 @@ const Dashboard = () => {
             <div className="h-screen bg-grayBg dark:bg-darkBg flex overflow-hidden">
                 <div className="flex-1 overflow-auto">
                     <div className="p-4 ml-4 rounded-xl bg-white dark:border-none dark:bg-darkerBG dark:text-white border border-gray-300">
-                        <h1 className="text-2xl">ALL POSTS</h1>
+                        <h1 className="text-2xl font-bold ">Tüm Gönderiler</h1>
                     </div>
                     {/*  POSTS */}
                     <div>

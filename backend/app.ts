@@ -21,24 +21,4 @@ app.use(cors({
 app.use("/api", router);
 
 
-/*app.get('/users', async (req, res) => {
-    const data = {
-        email: 'asdsssasd@gmai.com',
-        password:"asdas2addasd",
-        firstName: 'John',
-        lastName: 'Doe',
-        username: 'johndoe',
-
-    };
-
-    try {
-        const newUser = await prisma.user.create({ data });
-        res.json(newUser);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'An error occurred while creating the user' });
-    }
-});
-*/
-
 export default app;

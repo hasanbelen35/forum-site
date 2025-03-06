@@ -41,8 +41,13 @@ const ProfilePage: React.FC = () => {
 
   return (
     <ProtectedRoute>
-      <div className="flex justify-center items-center h-screen w-full bg-gray-100 dark:bg-darkBg">
-        <div className="bg-white dark:bg-darkerBG p-8 rounded-lg shadow-lg w-96">
+      <div className="bg-white dark:bg-darkerBG w-full dark:text-white rounded-xl flex items-center pt-4 pl-4 ">
+        <h2 className="text-2xl font-bold pb-5">
+          PROFİL
+        </h2>
+      </div>
+      <div className="flex justify-center items-center pt-4  w-full bg-gray-100 dark:bg-darkBg">
+        <div className="bg-white w-full dark:bg-darkerBG p-8 rounded-lg shadow-lg ">
           <h1 className="text-2xl font-bold text-center text-darkTextGreen mb-4">Profil Bilgileri</h1>
 
           {loading ? (
