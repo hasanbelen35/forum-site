@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
                         <input
                             type="text"
                             className="w-64 focus:border-none focus:ring-0 dark:bg-white outline-none"
-                            placeholder="Gönderi , Yazar , Hashtag ara ..."
+                            placeholder="Gönderi ,Yazar , Hashtag ara ..."
                         />
                         <AiOutlineSearch className="ml-2 text-gray-500" />
                     </div>
@@ -138,7 +138,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* İkincil Navbar */}
-            <div className="shadow-2xl dark:bg-darkerBG dark:text-white pb-2 pt-2 flex justify-center items-center">
+            <div className="shadow-2xl  dark:bg-darkerBG dark:text-white pb-3 pt-3 flex justify-center items-center">
                 SECOND NAV
             </div>
         </div>

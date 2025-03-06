@@ -14,7 +14,7 @@ const Sidebar = () => {
     { name: "Gündem Haberleri", route: "/gundem" },
     { name: "İletişim", route: "/iletisim" },
     { name: "Kurallar", route: "/site-rules" },
-    { name: "Amacımız", route: "/amacimiz" }
+    { name: "Amacımız", route: "/purpouse" }
   ];
 
   const router = useRouter();

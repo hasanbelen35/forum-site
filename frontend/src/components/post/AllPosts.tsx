@@ -51,13 +51,13 @@ const AllPosts = () => {
 
                                 {/* BUTONLAR: YORUM, BEĞENİ, KAYDET */}
                                 <div className="w-full flex gap-8 mt-2 pl-14">
-                                    <button className="mt-2 rounded-md border flex items-center  pr-2 pl-2">
-                                        <FaCommentDots />
-                                        Comment
-                                    </button>
                                     <button className="mt-2 rounded-md border flex items-center pr-2 pl-2">
                                         <AiFillLike />
                                         Like
+                                    </button>
+                                    <button className="mt-2 rounded-md border flex items-center  pr-2 pl-2">
+                                        <FaCommentDots />
+                                        Comment
                                     </button>
                                     <button className="mt-2 rounded-md border flex items-center pr-2 pl-2">
                                         <IoSaveOutline />
