@@ -1,4 +1,4 @@
-import { createNewPost, getAllPosts, getAllPostByUserId, updatePostByUser, deletePostByIdService } from "../../services/post/postServices.ts";
+import { createNewPost, getAllPosts, getAllPostByUserId, updatePostByUser, deletePostByIdService, likePostService } from "../../services/post/postServices.ts";
 
 export const createPostController = async (req: any, res: any) => {
     try {
@@ -142,7 +142,7 @@ export const deletePostByİd = async (req: any, res: any) => {
     try {
         const userId: number = req.user?.id;
         const postId: number = parseInt(req.params.id);
-       
+
         if (!userId || !postId) {
             return res.status(400).json({ success: false, message: "Invalid postId or userId" });
         };
@@ -162,3 +162,33 @@ export const deletePostByİd = async (req: any, res: any) => {
 
     }
 };
+
+// LIKE POST BY ID CONTROLLER
+export const likePostController = async (req: any, res: any) => {
+    // likePostService
+    try {
+        const postID: number = parseInt(req.params.id);
+        const userID: number = req.user?.id;
+        console.log("user:", userID)
+        console.log("post:", postID)
+
+        if (!userID || !postID) {
+            return res.status(400).json({ success: false, message: "Invalid postId or userId" });
+        };
+        const likeData = { postID, userID };
+
+        const likeResponse = await likePostService(likeData)
+
+        if (likeResponse) {
+            return res.status(200).json({
+                success: true,
+                data: likeResponse
+            });
+        }
+
+    } catch (error) {
+        console.error("Like işlemi sırasında hata:", error);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+};
+

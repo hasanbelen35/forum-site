@@ -2,7 +2,6 @@
 
 import ProtectedRoute from "@/components/ProtectedRoutes";
 import AllPosts from '@/components/post/AllPosts'
-
 // TODO : WILL DO PAGINATION 
 // TODO : WILL DO PAGINATION 
 // TODO : WILL DO PAGINATION 

@@ -88,5 +88,36 @@ export const deletePostById = async (postId: number) => {
     }
 };
 
+// lıke post
+export const likePost = async (postID: number) => {
+    try {
+        const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/like-post/${postID}`,
+            {}, 
+            {
+                withCredentials: true, 
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        console.log(response.data);
+        return response.data;
+    } catch (error: any) {
+        console.error("An error occurred while liking the post:", error.message);
+        return { success: false, message: "An error occurred while liking the post" };
+    }
+};
 
-
+export const getLikedUsers = async (postID: number) => {
+    try {
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/post-likes/${postID}`,
+            { withCredentials: true }
+        );
+        return response.data.likedUsers;
+    } catch (error) {
+        console.error("Error fetching liked users:", error);
+        return [];
+    }
+};

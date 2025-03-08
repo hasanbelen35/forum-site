@@ -1,23 +1,34 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePostStore } from "@/store/usePostStore";
 import { FaCommentDots } from "react-icons/fa";
-import { AiFillLike } from "react-icons/ai";
 import { IoSaveOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { useProfileStore } from "@/store/useProfileStore";
 import ProtectedRoute from "@/components/ProtectedRoutes";
+import { likePost } from "@/api/post/post";
+import { RiDislikeLine } from "react-icons/ri";
+import { FcLike } from "react-icons/fc";
 
 const AllPosts = () => {
     const { posts, fetchPosts } = usePostStore();
     const { userData, fetchUserData } = useProfileStore();
-
+    const [likedPosts, setLikedPosts] = useState<{ [key: number]: boolean }>({});
     useEffect(() => {
         fetchPosts();
     }, []);
     useEffect(() => {
         fetchUserData();
     }, []);
+
+
+    // LIKE POST 
+    const handleLike = async (postID: number) => {
+        const liked = await likePost(postID);
+        if (liked.success) {
+            setLikedPosts((prev) => ({ ...prev, [postID]: !prev[postID] }));
+        }
+    };
     return (
         <ProtectedRoute>
             <div>
@@ -51,9 +62,10 @@ const AllPosts = () => {
 
                                 {/* BUTONLAR: YORUM, BEĞENİ, KAYDET */}
                                 <div className="w-full flex gap-8 mt-2 pl-14">
-                                    <button className="mt-2 rounded-md border flex items-center pr-2 pl-2">
-                                        <AiFillLike />
-                                        Like
+                                    <button
+                                        onClick={() => handleLike(post.id)}
+                                        className="flex items-center gap-1 border p-2 rounded-md">
+                                        {likedPosts[post.id] ? <FcLike /> : <RiDislikeLine />}
                                     </button>
                                     <button className="mt-2 rounded-md border flex items-center  pr-2 pl-2">
                                         <FaCommentDots />

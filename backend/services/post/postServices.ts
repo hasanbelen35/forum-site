@@ -1,12 +1,16 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
-
+//import { LikeDataInterface } from '../../interfaces/postInterface.ts';
 interface UpdateData {
     postId: number;
     userId: number;
     title: string;
     content: string;
-}
+};
+export interface LikeDataInterface {
+    postID: number,
+    userID: number
+};
 
 // Create a New Post
 export const createNewPost = async (id: number, title: string, content: string) => {
@@ -125,8 +129,50 @@ export const deletePostByIdService = async (userId: number, postId: number) => {
 
         return { success: true, message: "Post deleted succesfully" };
     } catch (error) {
-       
+
 
         return { success: false, message: "An error ocurred while post deleting!!" };
     }
 };
+
+// LIKE POST BY ID 
+export const likePostService = async (likeData: LikeDataInterface) => {
+    try {
+        const { postID, userID } = likeData;
+
+        const post = await prisma.post.findUnique({
+            where: { id: postID }
+        });
+        
+
+        if (!post) {
+            return { success: false, message: "Post bulunamadı." };
+        }
+
+        const existingLike = await prisma.postLike.findFirst({
+            where: {
+                postId: postID,
+                userId: userID
+            }
+        });
+
+        if (existingLike) {
+            return { success: false, message: "You already liked this post!" };
+        }
+
+        await prisma.postLike.create({
+            data: {
+                postId: postID,
+                userId: userID
+            }
+        });
+        
+
+        return { success: true, message: "POST LIKED" };
+    } catch (error) {
+        console.error("Beğeni eklenirken hata oluştu:", error);
+        return { success: false, message: "Beğeni eklenirken hata oluştu." };
+    }
+};
+
+
